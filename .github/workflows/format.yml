@@ -1,0 +1,21 @@
+name: Format check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Fake game directory
+        run: mkdir -p "$RUNNER_TEMP/game/MelonLoader"
+      - name: Verify formatting
+        env:
+          KNIGHTFALL_DIR: ${{ runner.temp }}/game
+        run: dotnet format whitespace --verify-no-changes
