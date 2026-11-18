@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Absolute path to the game's install folder. -->
+    <GameDir>/absolute/path/to/steamapps/common/Knightfall</GameDir>
+  </PropertyGroup>
+</Project>

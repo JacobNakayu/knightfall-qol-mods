@@ -1,0 +1,38 @@
+<Project>
+
+  <!-- Machine-specific settings live in GameDir.props.user (git-ignored). -->
+  <Import Project="$(MSBuildThisFileDirectory)GameDir.props.user"
+          Condition="Exists('$(MSBuildThisFileDirectory)GameDir.props.user')" />
+
+  <!-- Fallback: an environment variable named KNIGHTFALL_DIR. -->
+  <PropertyGroup>
+    <GameDir Condition="'$(GameDir)' == '' and '$(KNIGHTFALL_DIR)' != ''">$(KNIGHTFALL_DIR)</GameDir>
+  </PropertyGroup>
+
+  <!-- Settings shared by every mod. -->
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="$(GameDir)/MelonLoader/net6/*.dll" Private="false" />
+    <Reference Include="$(GameDir)/MelonLoader/Il2CppAssemblies/*.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="CopyToMods" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameDir)/Mods" />
+  </Target>
+
+  <!-- Fail early with a readable message instead of dozens of missing-type errors. -->
+  <Target Name="CheckGameDir" BeforeTargets="BeforeResolveReferences">
+    <Error Condition="'$(GameDir)' == ''"
+           Text="GameDir is not set. Copy GameDir.props.user.example to GameDir.props.user and edit it, or set the KNIGHTFALL_DIR environment variable." />
+    <Error Condition="'$(GameDir)' != '' and !Exists('$(GameDir)/MelonLoader')"
+           Text="GameDir '$(GameDir)' has no MelonLoader folder. Check the path and that MelonLoader has run once." />
+  </Target>
+
+</Project>
