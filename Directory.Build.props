@@ -25,6 +25,7 @@
 
   <Target Name="CopyToMods" AfterTargets="Build">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameDir)/Mods" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="../../Downloadables" />
   </Target>
 
   <!-- Fail early with a readable message instead of dozens of missing-type errors. -->
