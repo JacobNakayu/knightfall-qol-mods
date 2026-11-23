@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/EnhancedInventory/EnhancedInventory.csproj" />
+    <Project Path="src/DawnTeamRespawn/DawnTeamRespawn.csproj" />
   </Folder>
 </Solution>
