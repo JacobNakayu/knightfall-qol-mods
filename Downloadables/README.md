@@ -49,7 +49,31 @@ Go to [Microsoft's .Net Installation Guide](https://learn.microsoft.com/en-us/do
 You should be fine to pick either `.NET Desktop Runtime` if you just want to play, but you'll need the full sdk if you want to develop mods.
 
 ###  MelonLoader
-Go to [MelonLoader's Home Site](https://melon-loader.com/#getting-started) and follow the install instructions.
+Go to [MelonLoader's Home Site](https://melon-loader.com/#getting-started) and follow the install instructions. These should include downloading MelonLoader, unzipping it in your game's root directory, and running the game. It is likely that if .NET is not installed, or not installed correctly, you will be prompted to download it in this step. An indication that MelonLoader has been installed correctly is a terminal that will open when you launch the game. 
+
+After downloading the `.dll` files in this folder that contain your desired mods and placing them in the `/Mods` as directed in the MelonLoader instructions, run the game again. This time, read the console and verify the files are what you expect. You should see a series of lines that look something like
+```
+[11:09:33.120] ------------------------------
+[11:09:33.121] Enhanced Inventory v0.1.0
+[11:09:33.121] by Jacob Nakayu
+[11:09:33.122] Assembly: EnhancedInventory.dll
+[11:09:33.123] ------------------------------
+```
+for each mod you load. These indicate mods are detected. Near the bottom of the console a small report should load that reads `[11:26:41.200] 5 Mods loaded. `. Make sure this matches the number of downloads you placed in the file. It's not uncommon for mods to be detected but unable to load for a number of reasons. Similarly, if the number of loaded mods greatly exceeds your expected count, it's possible you are running malware that you don't need. This should not be a concern for the mods in this repository.
+
+### Smart App Control
+On windows, there are many security features intended to prevent less technical users from running malware, but some of these features can block untrusted files such as community created mods from running. While the specific error message and fix might vary from user to user, a common source of these blocks is **Windows 11 Smart App Control**. If your mods are being detected but an error message says `An Application Control Policy has blocked this file`, consider turning off Smart App Control. 
+
+> [!WARNING]
+> Smart App Control prevents untrusted or unsigned files from running on your computer. It is intended to prevent ransomware and other malware from running without your permission.
+>
+> Smart App Control is not always helpful and can prevent trusted files from running, but having it generally makes your device more secure and it should only be disabled if you trust the files you are running. Consider enabling it again after finishing your play session. 
+
+Smart App Control can be disabled by opening 
+
+**Windows Security &rarr; App & Browser Control &rarr; Smart App Control** 
+
+and checking the box from on to off. Because this does decrease your security it is recommended to re-enable it after you are done playing which can be done from the same menu.
 
 ## Linux
 Download the [MelonLoader Linux Installer](https://github.com/LavaGang/MelonLoader.Installer/releases/latest/download/MelonLoader.Installer.Linux) from that GitHub link.
