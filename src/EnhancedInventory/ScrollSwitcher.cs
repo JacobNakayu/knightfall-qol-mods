@@ -1,6 +1,6 @@
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-
 using Il2Cpp;
+
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
 using Il2CppPhoton.Pun;
 

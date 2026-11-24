@@ -1,10 +1,10 @@
 using DawnTeamRespawn;
 
+using Il2Cpp;
+
 using MelonLoader;
 
 using UnityEngine;
-
-using Il2Cpp;
 
 [assembly: MelonInfo(typeof(DawnTeamRespawnMod), "Dawn Team Respawn", "0.1.0", "Jacob Nakayu")]
 [assembly: MelonGame("Landfall Games", "Knightfall")]

@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <EmbeddedResource Include="houses.png" LogicalName="InTownHUD.houses.png" />
+    </ItemGroup>
+</Project>
