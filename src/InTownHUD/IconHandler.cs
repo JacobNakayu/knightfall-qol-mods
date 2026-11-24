@@ -21,17 +21,11 @@ internal static class IconHandler
     private static GameObject _root;
     private static Sprite _sprite;
 
-    private static Image _image;
-    private static Outline _iconOutline;
     private static TextMeshProUGUI _label;
 
     private static bool _visible;
-    private static bool _isNight;
-    private static bool _hasColor;
 
     private static string _currentFarmName = "CAMP";
-
-    public static bool HasColor => _root != null && _hasColor;
 
     public static void SetVisible(bool visible)
     {
@@ -41,33 +35,11 @@ internal static class IconHandler
         _visible = visible;
     }
 
-    public static void SetDaySegment(GM_Adventure.DaySegment segment)
-    {
-        SetNight(segment is GM_Adventure.DaySegment.Evening or GM_Adventure.DaySegment.Night);
-    }
-
     public static void SetCurrentFarmName(Farm farm)
     {
         string name = farm.townName;
-        _currentFarmName = string.IsNullOrEmpty(name) ? "CAMP" : farm.townName.ToUpper();
+        _currentFarmName = string.IsNullOrEmpty(name) ? "CAMP" : name.ToUpper();
         if (_label != null) _label.text = $"IN {_currentFarmName}";
-    }
-
-    private static void SetNight(bool isNight)
-    {
-        if (_root != null && _hasColor && isNight == _isNight) return;
-        if (!EnsureIcon()) return;
-
-        Color main = isNight ? Color.white : Color.black;
-        Color edge = isNight ? Color.black : Color.white;
-
-        _image.color = main;
-        _iconOutline.effectColor = edge;
-        _label.color = main;
-        _label.outlineColor = edge;
-
-        _isNight = isNight;
-        _hasColor = true;
     }
 
     private static bool EnsureIcon()
@@ -95,7 +67,6 @@ internal static class IconHandler
 
         _root.SetActive(false);
         _visible = false;
-        _hasColor = false;
         return true;
     }
 
@@ -114,15 +85,14 @@ internal static class IconHandler
         image.preserveAspect = true;
         image.raycastTarget = false;
 
-        _iconOutline = go.AddComponent<Outline>();
-        _iconOutline.effectDistance = new Vector2(1f, 1f);
-
-        _image = image;
+        Outline outline = go.AddComponent<Outline>();
+        outline.effectDistance = new Vector2(1f, 1f);
+        outline.effectColor = Color.black;
     }
 
     private static void CreateLabel(Transform parent, TMP_FontAsset font)
     {
-        GameObject go = new GameObject("Label");
+        GameObject go = new("Label");
         go.transform.SetParent(parent, false);
 
         // Stretch to fill the container, minus the space the icon takes on the left
@@ -148,6 +118,7 @@ internal static class IconHandler
 
         _ = label.fontMaterial;
         label.outlineWidth = 0.1f;
+        label.outlineColor = Color.black;
 
         _label = label;
     }

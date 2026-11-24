@@ -1,5 +1,7 @@
 using DawnTeamRespawn;
 
+using HarmonyLib;
+
 using Il2Cpp;
 
 using MelonLoader;
@@ -17,13 +19,10 @@ public class DawnTeamRespawnMod : MelonMod
     private const float FlashInterval = 0.5f;
     private const float MinGhostTime = 2f;
 
-
     private ReviveState _lastState = ReviveState.None;
     private float _nextCheckTime;
     private float _nextFlashTime;
     private float _ghostSince = -1f; // -1 means you're not a ghost
-
-    private bool _teamWasWiped;
 
     public override void OnInitializeMelon()
     {
@@ -33,20 +32,8 @@ public class DawnTeamRespawnMod : MelonMod
     public override void OnUpdate()
     {
         Player localPlayer = Player.localplayer;
-        if (localPlayer == null)
+        if (localPlayer == null || !localPlayer.data.isGhost)
         {
-            _teamWasWiped = false;
-            _lastState = ReviveState.None;
-            _ghostSince = -1;
-            return;
-        }
-        if (!localPlayer.data.isGhost)
-        {
-            if (_teamWasWiped)
-            {
-                ReviveActions.ResetWipeSpeedBoost(localPlayer);
-                _teamWasWiped = false;
-            }
             _lastState = ReviveState.None;
             _ghostSince = -1;
             return;
@@ -58,7 +45,6 @@ public class DawnTeamRespawnMod : MelonMod
         _nextCheckTime = Time.time + CheckInterval;
 
         ReviveState state = EligibilityChecker.GetState(localPlayer);
-        if (state != ReviveState.None) _teamWasWiped = true;
         if (state != _lastState)
         {
             LoggerInstance.Msg($"State: {_lastState} => {state}");
@@ -93,5 +79,35 @@ public class DawnTeamRespawnMod : MelonMod
     private static bool NeedsToReachHorse(ReviveState state)
     {
         return state is ReviveState.NotInTown or ReviveState.TooFarFromHorse;
+    }
+}
+
+[HarmonyPatch(typeof(Pl_Revive), nameof(Pl_Revive.RPCA_Revive))]
+internal static class ReviveSpeedResetPatch
+{
+    // Players (on this client) who still carry the wipe boost
+    private static readonly HashSet<int> Boosted = new();
+
+    private static void Prefix(Pl_Revive __instance)
+    {
+        Player player = __instance.player;
+        PlayerHandler handler = PlayerHandler.instance;
+        if (player == null || handler == null) return;
+        if (handler.CheckPlayersAlive(player.TeamID, out _) != 0) return;
+
+        // Whole team is down: every member got the wipe boost
+        foreach (Player p in handler.CurrentPlayers)
+        {
+            if (p != null && p.TeamID == player.TeamID) Boosted.Add(p.GetInstanceID());
+        }
+    }
+
+    // Runs on every client: resets whoever was revived, if they were boosted, however they were revived
+    private static void Postfix(Pl_Revive __instance)
+    {
+        Player player = __instance.player;
+        if (player == null || !Boosted.Remove(player.GetInstanceID())) return;
+
+        ReviveActions.ResetWipeSpeedBoost(player);
     }
 }

@@ -37,20 +37,7 @@ public class InTownHUDMod : MelonMod
             return;
         }
 
-        if (!IconHandler.HasColor) IconHandler.SetDaySegment(game.daySegment);
         IconHandler.SetVisible(localPlayer.data.inFarm);
-    }
-
-
-}
-
-[HarmonyPatch(typeof(GM_Adventure), nameof(GM_Adventure.EnterDaySegment))]
-internal static class DaySegmentPatch
-{
-    private static void Postfix(int newDaySeg)
-    {
-        var seg = (GM_Adventure.DaySegment)newDaySeg;
-        IconHandler.SetDaySegment(seg);
     }
 }
 
