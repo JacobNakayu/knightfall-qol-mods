@@ -6,7 +6,7 @@ using Il2CppPhoton.Pun;
 
 using MelonLoader;
 
-namespace OddTeams;
+namespace SingletonTeams;
 
 /// <summary>
 /// With an odd number of players or a "small lobby", everyone plays solo instead of one player
@@ -18,10 +18,7 @@ namespace OddTeams;
 internal static class StartGamePatch
 {
     // One team per spawn camp, and the map has 14 camps.
-    private const int MaxTeams = 14;
-
-    // Minimum players before we pair off into teams
-    private const int MinPlayersForPairs = 8;
+    private const int MaxTeams = Settings.MaxTeams;
 
     // Set up in the Prefix and used by InitPlayerPatch while StartGame runs.
     public static bool SplitActive;
@@ -43,7 +40,7 @@ internal static class StartGamePatch
 
         int playerCount = handler.CurrentPlayers.Count;
         bool isOdd = playerCount % 2 == 1;
-        bool isSmallLobby = playerCount < MinPlayersForPairs;
+        bool isSmallLobby = playerCount < Settings.MinPlayersForPairs;
 
         if (playerCount == 1) return;
         if (!isOdd && !isSmallLobby) return;

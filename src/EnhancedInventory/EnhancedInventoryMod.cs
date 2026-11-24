@@ -8,7 +8,6 @@ using MelonLoader;
 
 using UnityEngine;
 
-
 [assembly: MelonInfo(typeof(EnhancedInventoryMod), "Enhanced Inventory", "0.1.0", "Jacob Nakayu")]
 [assembly: MelonGame("Landfall Games", "Knightfall")]
 
@@ -18,6 +17,7 @@ public class EnhancedInventoryMod : MelonMod
 {
     public override void OnInitializeMelon()
     {
+        Settings.Init();
         LoggerInstance.Msg("Enhanced Inventory Loaded");
     }
 

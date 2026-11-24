@@ -8,25 +8,23 @@ namespace EnhancedInventory;
 
 internal static class ScrollSwitcher
 {
-    // Only allow scroll select for Weapon, Bomb, and Bandage (the first three items)
-    private const int FirstSlot = 0;
-    private const int LastSlot = 2;
-
     public static int GetNextSlot(int current, int direction)
     {
-        // Holding something outside the scroll range (nothing, map, trumpet, flag):
+        int first = Settings.MinScrollSlot;
+        int last = Settings.MaxScrollSlot;
+
+        // Holding something outside the configured range (including nothing):
         // scrolling down enters at the first slot, scrolling up at the last.
-        if (current < FirstSlot || current > LastSlot)
+        if (current < first || current > last)
         {
-            return direction > 0 ? FirstSlot : LastSlot;
+            return direction > 0 ? first : last;
         }
 
         int next = current + direction;
-        if (next > LastSlot) next = FirstSlot;
-        if (next < FirstSlot) next = LastSlot;
+        if (next > last) next = first;
+        if (next < first) next = last;
         return next;
     }
-
 
     public static void RequestSwitch(Player player, int key)
     {

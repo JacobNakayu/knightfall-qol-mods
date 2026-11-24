@@ -1,0 +1,63 @@
+# Available Mods
+## Dawn Team Respawn (REQUIRED)
+Allows players to revive under the following conditions:
+1. Your entire team is dead
+2. Your horse is in a town
+3. It is morning
+4. You are within 8 m of your horse
+
+Includes text banners and notifications regarding revive events.
+
+> [!WARNING]
+> If anybody at all in your lobby has this mod, everybody needs the most up-to-date verison of the mod.
+>
+> This mod adds fully new game mechanics and patches behavior in ways that require all games to be in sync.
+
+## Enhanced Inventory
+Highlights your currently held item on your hotbar.
+
+Additionally, allows you to configure a "scrolling range" so you can use your mouse wheel to navigate your inventory.
+
+Settings for the scrolling range can be found in your local game directory under `KnightFall/UserData/EnhancedInventory.cfg` after first load with the mod.
+
+## In-Town HUD
+Provides a simple icon and message displaying when you are considered "in town" and which town you are in.
+
+## Singleton Teams
+Unmodded, the game automatically fills teams of 2 no matter the player count, so a lobby of 3 players would have a game with a 2-person team and a 1-person team.
+
+This provides a way for the host to configure the minimum number of players that must be in a lobby before 2-player teams are formed, and automatically prevents 2-person teams from being formed in odd-populated lobbies below 15 players.
+
+Settings for the scrolling range can be found in your local game directory under `KnightFall/UserData/SingletonTeams.cfg` after first load with the mod.
+
+## Town Boundary Force Field
+Makes town borders visible by covering them in a sort of sparkly "force field" so that you can clearly see when you are in or out of town.
+
+
+
+# Getting Started with Mods
+All mods require MelonLoader and the .Net framework to function.
+
+Once you run the game for the first time with MelonLoader installed, activating a mod is as simple as downloading one of the `.dll` files from this page and putting it in your game's new `Mods/` folder.
+
+You can find your game directory by going to the Steam page and navigating to `Settings > Manage > Browse Local Files`.
+
+## Windows
+### .Net
+Go to [Microsoft's .Net Installation Guide](https://learn.microsoft.com/en-us/dotnet/core/install/windows) and follow the installation instructions.
+
+You should be fine to pick either `.NET Desktop Runtime` if you just want to play, but you'll need the full sdk if you want to develop mods.
+
+###  MelonLoader
+Go to [MelonLoader's Home Site](https://melon-loader.com/#getting-started) and follow the install instructions.
+
+## Linux
+Download the [MelonLoader Linux Installer](https://github.com/LavaGang/MelonLoader.Installer/releases/latest/download/MelonLoader.Installer.Linux) from that GitHub link.
+
+Select `Version 0.7.3` and **do not** enable nightly builds.
+
+Point the installer at your game directory from Steam.
+
+Force the use of Proton for the game by going to `Settings > Properties > Compatibility` on the Steam library page and selecting `Proton Experimental`.
+
+In that same window, under `General`, add the line `WINEDLLOVERRIDES="version=n,b" %command%` to the Launch Options input.
