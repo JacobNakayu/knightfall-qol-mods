@@ -29,6 +29,8 @@ internal static class IconHandler
     private static bool _isNight;
     private static bool _hasColor;
 
+    private static string _currentFarmName = "CAMP";
+
     public static bool HasColor => _root != null && _hasColor;
 
     public static void SetVisible(bool visible)
@@ -42,6 +44,13 @@ internal static class IconHandler
     public static void SetDaySegment(GM_Adventure.DaySegment segment)
     {
         SetNight(segment is GM_Adventure.DaySegment.Evening or GM_Adventure.DaySegment.Night);
+    }
+
+    public static void SetCurrentFarmName(Farm farm)
+    {
+        string name = farm.townName;
+        _currentFarmName = string.IsNullOrEmpty(name) ? "CAMP" : farm.townName.ToUpper();
+        if (_label != null) _label.text = $"IN {_currentFarmName}";
     }
 
     private static void SetNight(bool isNight)
@@ -125,11 +134,17 @@ internal static class IconHandler
 
         TextMeshProUGUI label = go.AddComponent<TextMeshProUGUI>();
         label.font = font;
-        label.text = "IN TOWN";
+        label.text = $"IN {_currentFarmName}";
         label.fontSize = 28;
         label.color = Color.white;
         label.alignment = TextAlignmentOptions.MidlineLeft; // vertically centered next to the icon
         label.raycastTarget = false;
+
+        label.enableAutoSizing = true;
+        label.fontSizeMin = 14;
+        label.fontSizeMax = 28;
+
+        label.enableWordWrapping = false;
 
         _ = label.fontMaterial;
         label.outlineWidth = 0.1f;

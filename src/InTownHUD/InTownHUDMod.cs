@@ -53,3 +53,13 @@ internal static class DaySegmentPatch
         IconHandler.SetDaySegment(seg);
     }
 }
+
+[HarmonyPatch(typeof(Player), nameof(Player.EnterFarm))]
+internal static class GetLocalFarmName
+{
+    private static void Postfix(Player __instance, Farm farm)
+    {
+        if (__instance != Player.localplayer) return;
+        IconHandler.SetCurrentFarmName(farm);
+    }
+}
