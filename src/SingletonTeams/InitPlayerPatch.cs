@@ -2,7 +2,7 @@ using HarmonyLib;
 
 using Il2Cpp;
 
-namespace OddTeams;
+namespace SingletonTeams;
 
 /// <summary>
 /// InitPlayer(i, j, team) sets up player j of team i and sends RPCA_InitPlayer to everyone,

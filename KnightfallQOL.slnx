@@ -3,7 +3,7 @@
     <Project Path="src/EnhancedInventory/EnhancedInventory.csproj" />
     <Project Path="src/DawnTeamRespawn/DawnTeamRespawn.csproj" />
     <Project Path="src/InTownHUD/InTownHUD.csproj" />
-    <Project Path="src/OddTeams/OddTeams.csproj" />
+    <Project Path="src/SingletonTeams/SingletonTeams.csproj" />
     <Project Path="src/TownBoundaryForceField/TownBoundaryForceField.csproj" />
   </Folder>
 </Solution>
